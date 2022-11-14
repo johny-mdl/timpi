@@ -29,30 +29,28 @@ FROM base as timpi_version
 RUN useradd -ms /bin/bash timpi
 WORKDIR /home/timpi
 
-ARG fileName=Collector_Linux_0.8.36
+ARG fileName=Timpi_0.8.37
 
-#RUN curl https://cdn.discordapp.com/attachments/981709237812072498/997361180022681621/TimpiCollector-0-8-35-linux.7z -o timpi.7z || wget https://cdn.discordapp.com/attachments/981709237812072498/997361180022681621/TimpiCollector-0-8-35-linux.7z -o timpi.7z
-#RUN 7z x timpi.7z
+RUN wget https://cdn.discordapp.com/attachments/981709237812072498/1031449625741250621/Timpi_Linux_0.8.37.7z
+RUN 7z x Timpi_Linux_0.8.37.7z
 
-RUN wget https://cdn.discordapp.com/attachments/981709237812072498/1011434761786507404/$fileName.zip
-RUN unzip $fileName.zip
-
-RUN chmod 700 ./$fileName/TimpiCollector
+RUN chmod 711 ./$fileName/TimpiCollector
+RUN chmod 711 ./$fileName/TimpiManagerLinux
+RUN chmod 711 ./$fileName/TimpiUI
 
 COPY start.sh ./$fileName
 RUN chmod 700 ./$fileName/start.sh
 
-#RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
+# RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
 
-RUN chown timpi:timpi /var/log/timpi
-RUN chown timpi:timpi /etc/timpi
-RUN chown timpi:timpi ./$fileName/TimpiCollector
-RUN chown timpi:timpi ./$fileName/start.sh
+# RUN chown timpi:timpi /var/log/timpi
+# RUN chown timpi:timpi /etc/timpi
+# RUN chown timpi:timpi ./$fileName
+# RUN chown timpi:timpi ./$fileName/TimpiCollector
+# RUN chown timpi:timpi ./$fileName/start.sh
 
 #RUN apt install qemu-user-static -y
 
-#RUN apt-get install jq -y
-
-USER timpi
+# USER timpi
 WORKDIR $fileName
 ENTRYPOINT ["./start.sh"]

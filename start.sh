@@ -11,7 +11,7 @@ while true; do
     if pgrep -x TimpiCollector > /dev/null ; then #check if it's already running
         sleep 60; #sleep for 60 seconds if it's running
     else 
-        ./TimpiCollector ; #start it if it isn't running
+        ./TimpiManagerLinux  ; #start it if it isn't running
 	   
        if [ $? -ne 0 ]; then
 	       exit 1 ;
